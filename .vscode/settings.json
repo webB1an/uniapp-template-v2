@@ -58,7 +58,6 @@
 
   // Prettier 配置
   "prettier.enable": true,
-  "prettier.configPath": "./prettier.config.mjs",
   "prettier.requireConfig": false,
   "prettier.useEditorConfig": true,
 

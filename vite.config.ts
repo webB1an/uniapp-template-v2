@@ -23,7 +23,7 @@ export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => 
     server: {
       host: '0.0.0.0',
       open: true,
-      port: +env.VITE_PORT,
+      port: Number(env.VITE_APP_PORT) || 5173,
       // 反向代理配置
       proxy: {
         [env.VITE_APP_BASE_API]: {
