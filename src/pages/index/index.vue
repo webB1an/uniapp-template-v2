@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-const title = ref("Hello");
+const title = ref('Hello')
 </script>
 
 <style lang="scss" scoped>

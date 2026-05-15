@@ -1,7 +1,7 @@
 // src/utils/request.ts
 
 export default function request<T>(options: UniApp.RequestOptions): Promise<T> {
-  const token = uni.getStorageSync("token"); // 从本地缓存获取 token
+  const token = uni.getStorageSync('token') // 从本地缓存获取 token
   return new Promise((resolve, reject) => {
     uni.request({
       ...options,
@@ -9,51 +9,51 @@ export default function request<T>(options: UniApp.RequestOptions): Promise<T> {
       url: `${import.meta.env.VITE_APP_API_URL}${options.url}`,
       header: {
         ...options.header,
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
       success: (response) => {
-        const resData = response.data as ResponseData<T>;
+        const resData = response.data as ResponseData<T>
         // 业务状态码 00000 表示成功
         if (resData.code === 200) {
           // 判断是否有分页
-          if ("total" in resData && "rows" in resData) {
+          if ('total' in resData && 'rows' in resData) {
             const data = {
               total: resData.total,
-              rows: resData.rows,
-            };
-            resolve(data as T);
+              rows: resData.rows
+            }
+            resolve(data as T)
           } else {
-            resolve(resData.data);
+            resolve(resData.data)
           }
         } else {
           // 特别处理的 url
-          const specialUrls = ["/special/url"];
+          const specialUrls = ['/special/url']
           if (specialUrls.includes(options.url!)) {
-            reject(resData.data);
-            return;
+            reject(resData.data)
+            return
           }
           uni.showToast({
-            title: resData.msg || "业务处理失败",
-            icon: "none",
-            duration: 2000,
-          });
+            title: resData.msg || '业务处理失败',
+            icon: 'none',
+            duration: 2000
+          })
           reject({
-            message: resData.msg || "业务处理失败",
-            code: resData.code,
-          });
+            message: resData.msg || '业务处理失败',
+            code: resData.code
+          })
         }
       },
       fail: (error) => {
         uni.showToast({
-          title: "网络请求失败",
-          icon: "none",
-          duration: 2000,
-        });
+          title: '网络请求失败',
+          icon: 'none',
+          duration: 2000
+        })
         reject({
-          message: "网络请求失败",
-          error,
-        });
-      },
-    });
-  });
+          message: '网络请求失败',
+          error
+        })
+      }
+    })
+  })
 }
